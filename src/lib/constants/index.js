@@ -1,0 +1,10 @@
+const SHEET_ID = import.meta.env.VITE_GOOGLE_SHEETS_ID;
+const API_KEY = import.meta.env.VITE_GOOGLE_SHEETS_API_KEY;
+const BASE_URL = 'https://sheets.googleapis.com/v4/spreadsheets/';
+const KEY = '?key=' + API_KEY;
+const PLAYERS_URL = BASE_URL + SHEET_ID + '/values/Players%20for%20This%20Tuesday' + KEY;
+const WANT_URL = BASE_URL + SHEET_ID + '/values/Want%20to%20Play' + KEY;
+const WAIT_URL = BASE_URL + SHEET_ID + '/values/Wait%20List%20Last%20Week' + KEY;
+const MOTHERS_URL = BASE_URL + SHEET_ID + '/values/Mothers' + KEY;
+const PLAYERINFO_URL = BASE_URL + SHEET_ID + '/values/Player%20Info' + KEY;
+export { PLAYERS_URL, WANT_URL, WAIT_URL, MOTHERS_URL, PLAYERINFO_URL };
