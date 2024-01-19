@@ -10,17 +10,17 @@
   const routes = [
     {
       path: '/',
-      title: 'This Tuesday',
-      show: showPlayers,
-    },
-    {
-      path: '/wanttoplay',
       title: 'Want to Play',
       show: true,
     },
     {
+      path: '/playersforthistuesday',
+      title: 'Players for This Tuesday',
+      show: showPlayers,
+    },
+    {
       path: '/waitlistlastweek',
-      title: 'Wait Last Week',
+      title: 'Wait List Last Week',
       show: showWait,
     },
     {
