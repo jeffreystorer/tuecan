@@ -1,9 +1,11 @@
 import { WAIT_URL } from '$lib/constants';
+import { WANT_URL } from '$lib/constants';
 import { PLAYERS_URL} from '$lib/constants'
 
 export async function load() {
 	let players = {};
 	let wait = {};
+	let want =[];
 	const res1 = await fetch(WAIT_URL);
 	if (!res1.ok) {
 		wait = {};
@@ -16,5 +18,11 @@ export async function load() {
 	}else{
 		players = await res2.json();
 	}
-	return { wait, players };
+	const res3 = await fetch(WANT_URL);
+	if (!res3.ok) {
+		want =  {};
+	}else{
+		want = await res3.json();
+	}
+	return { wait, players, want };
 }

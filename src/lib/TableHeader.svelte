@@ -1,9 +1,9 @@
 <script>
-  import { v4 as uuidv4 } from 'uuid';
   export let type;
   export let data; 
   let cols = [''];
-  let values = data.values;
+  //to avoid mutating data
+  let values = JSON.parse(JSON.stringify(data.values));
   let thNames = values[0];
   thNames.shift();
   let i;
@@ -19,7 +19,6 @@
       <th scope='col'>{col}</th>
     {/each}
   </tr>
-  <div id="endif"></div>
 </thead>
 {/if}
 
