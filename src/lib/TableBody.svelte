@@ -1,8 +1,7 @@
 <script>
 	export let type;
 	export let data;
-	const values = data.values;
-	const rows = values;
+	const rows = JSON.parse(JSON.stringify(data.values));
 	let rowsTD = '';
 	let colCount = rows[0].length;
 
@@ -24,15 +23,25 @@
 		const address = rows[i][7] ? rows[i][7] : '';
 		let trs;
 		switch (type) {
-      case 'mothers':
+			case 'mothers':
 				trs = `<tr><th scope='row'>${email}</th><td>${name}</td><td>`;
 				trs = trs + '</tr>';
 				return trs;
-        break;
+				break;
 			case 'playerinfo':
-				trs = `<tr><th scope='row'>${name}</th><td>Club No.: ${clubNumber}</td></tr>`;
-				trs = trs + `<tr><th scope='row'>${email}</th><td>${address}</td></tr>`;
-				trs = trs + `<tr><th scope='row'>Cell: ${cell}</th><td>Home: ${home}</td></tr>`;
+				if (!name.includes('*') && !name.includes('Substitutes')) {
+					trs = `<tr><th scope='row'>${name}</th><td>Club No.: ${clubNumber}</td></tr>`;
+					trs = trs + `<tr><th scope='row'>${email}</th><td>${address}</td></tr>`;
+					trs = trs + `<tr><th scope='row'>Cell: ${cell}</th><td>Home: ${home}</td></tr>`;
+				} else if (name.includes('*')) {
+					trs = `<tr><th scope='row'>&nbsp;</th><td>&nbsp;</td></tr>`;
+					trs = trs + `<tr><th scope='row'>&nbsp;</th><td>&nbsp;</td></tr>`;
+					trs = trs + `<tr><th scope='row'>&nbsp;</th><td>&nbsp;</td></tr>`;
+				} else {
+					trs = `<tr><th scope='row'>Substitutes</th><td>&nbsp;</td></tr>`;
+					trs = trs + `<tr><th scope='row'>&nbsp;</th><td>&nbsp;</td></tr>`;
+					trs = trs + `<tr><th scope='row'>&nbsp;</th><td>&nbsp;</td></tr>`;
+				}
 				return trs;
 				break;
 			default:
