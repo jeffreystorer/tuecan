@@ -1,80 +1,75 @@
 <script>
 	export let type;
 	export let data;
-	const rows = JSON.parse(JSON.stringify(data.values));
-	let rowsTD = '';
-	let colCount = rows[0].length;
-
-	function generateRows() {
-		for (var i = 1; i < rows.length; i++) {
-			if (rows[i][0]) rowsTD = rowsTD + generateCols(i);
-		}
-		return rowsTD;
-	}
-
-	function generateCols(i) {
-		const firstName = rows[i][1] ? rows[i][1] : '***********';
-		const lastName = rows[i][2] ? rows[i][2] : '';
-		const name = firstName + ' ' + lastName;
-		const email = rows[i][3] ? rows[i][3] : '';
-		const clubNumber = rows[i][4] ? rows[i][4] : '';
-		const cell = rows[i][5] ? rows[i][5] : '';
-		const home = rows[i][6] ? rows[i][6] : '';
-		const address = rows[i][7] ? rows[i][7] : '';
-		let trs;
-		switch (type) {
-			case 'mothers':
-				trs = `<tr><th scope='row'>${email}</th><td>${name}</td><td>`;
-				trs = trs + '</tr>';
-				return trs;
-				break;
-			case 'playerinfo':
-				if (!name.includes('*') && !name.includes('Substitutes')) {
-					trs = `<tr><th scope='row'>${name}</th><td>Club No.: ${clubNumber}</td></tr>`;
-					trs = trs + `<tr><th scope='row'>${email}</th><td>${address}</td></tr>`;
-					trs = trs + `<tr><th scope='row'>Cell: ${cell}</th><td>Home: ${home}</td></tr>`;
-				} else if (name.includes('*')) {
-					trs = `<tr><th scope='row'>&nbsp;</th><td>&nbsp;</td></tr>`;
-					trs = trs + `<tr><th scope='row'>&nbsp;</th><td>&nbsp;</td></tr>`;
-					trs = trs + `<tr><th scope='row'>&nbsp;</th><td>&nbsp;</td></tr>`;
-				} else {
-					trs = `<tr><th scope='row'>Substitutes</th><td>&nbsp;</td></tr>`;
-					trs = trs + `<tr><th scope='row'>&nbsp;</th><td>&nbsp;</td></tr>`;
-					trs = trs + `<tr><th scope='row'>&nbsp;</th><td>&nbsp;</td></tr>`;
-				}
-				return trs;
-				break;
-			default:
-				trs = `<tr><th scope='row'>${name}</th>`;
-
-				for (var j = 1; j < colCount - 1; j++) {
-					let rawVal = rows[i][j + 2] ? rows[i][j + 2] : '';
-					let val;
-					switch (rawVal) {
-						case 'Dine and Play':
-							val = 'Dine';
-							break;
-						case 'Play Only':
-							val = 'Play';
-							break;
-						case 'Not Available':
-							val = 'N/A';
-							break;
-						case '':
-							val = '';
-							break;
-						default:
-							break;
-					}
-					trs = trs + `<td data-val=${val}></td>`;
-				}
-				trs = trs + '</tr>';
-				return trs;
-				break;
+	let rows = JSON.parse(JSON.stringify(data.values));
+	const range = (end, start = 0, step = 1) =>
+		Array.from({ length: Math.ceil((end - start) / step) }, (_, i) => i * step + start);
+	const cols = range(rows[0].length, 3);
+	rows.forEach(abbreviate);
+	function abbreviate(row) {
+		cols.forEach(replaceValue);
+		function replaceValue(col) {
+			if (row[col]) {
+				row[col] = row[col].replace('Dine and Play', 'Dine');
+				row[col] = row[col].replace('Play Only', 'Play');
+				row[col] = row[col].replace('Not Available', 'N/A');
+			}
 		}
 	}
 </script>
 
 <tbody>
-	{@html `${generateRows()}`}
+	{#each rows as row, index}
+		{#if row[0] && index > 0}
+			{#if type === 'mothers'}
+				<tr>
+					<th scope="row">{row[3] ? row[3] : ''}</th>
+					<td>{row[1] + ' ' + row[2]}</td>
+				</tr>
+			{:else if type === 'playerinfo'}
+				{#if !row[0].includes('--')}
+					<tr>
+						<th scope="row">{row[1] + ' ' + row[2]}`</th>
+						<td>Club No.: {row[4] ? row[4] : ''}</td>
+					</tr>
+					<tr>
+						<th scope="row">{row[3] ? row[3] : ''}</th>
+						<td>{row[7] ? row[7] : ''}</td></tr
+					>
+					<tr>
+						<th scope="row">Cell: {row[5] ? row[5] : ''}</th>
+						<td>Home: {row[6] ? row[6] : ''}</td>
+					</tr>
+				{:else if row[1] && row[1].includes('Substitutes')}
+					<tr>
+						<th id="subs" scope="row">Substitutes</th>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<th scope="row">&nbsp;</th>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<th scope="row">&nbsp;</th>
+						<td>&nbsp;</td>
+					</tr>
+				{/if}
+			{:else}
+				<tr>
+					<th scope="row">{(row[1] ? row[1] : '***********') + ' ' + (row[2] ? row[2] : '')}</th>
+					{#each cols as col}
+						{#if row[col]}
+							<td data-val={row[col]}></td>
+						{/if}
+					{/each}
+				</tr>
+			{/if}
+		{/if}
+	{/each}
 </tbody>
+
+<style>
+	#subs {
+		font-weight: 900;
+	}
+</style>

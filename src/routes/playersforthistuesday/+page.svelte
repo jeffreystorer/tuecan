@@ -1,5 +1,4 @@
 <script>
-    import { v4 as uuidv4} from 'uuid';
     export let data;
     let values;
     if (data.players.values){
@@ -39,7 +38,7 @@
   
 {#if tds}
 <ol>
-    {#each tds as td, i (uuidv4())}
+    {#each tds as td, i}
     <li class={i < colorCount ? 'in' : 'out'}>
         {td[1]} {td[2]}
     </li>
