@@ -42,15 +42,15 @@
 					</tr>
 				{:else if row[1] && row[1].includes('Substitutes')}
 					<tr>
-						<th id="subs" scope="row">Substitutes</th>
-						<td>&nbsp;</td>
-					</tr>
-					<tr>
 						<th scope="row">&nbsp;</th>
 						<td>&nbsp;</td>
 					</tr>
 					<tr>
 						<th scope="row">&nbsp;</th>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<th id='subs' scope="row">Substitutes</th>
 						<td>&nbsp;</td>
 					</tr>
 				{/if}
