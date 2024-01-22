@@ -42,21 +42,21 @@
 					</tr>
 				{:else if row[1] && row[1].includes('Substitutes')}
 					<tr>
-						<th id="subs" scope="row">Substitutes</th>
-						<td>&nbsp;</td>
-					</tr>
-					<tr>
 						<th scope="row">&nbsp;</th>
 						<td>&nbsp;</td>
 					</tr>
 					<tr>
 						<th scope="row">&nbsp;</th>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<th id='subs' scope="row">Substitutes</th>
 						<td>&nbsp;</td>
 					</tr>
 				{/if}
 			{:else}
 				<tr>
-					<th scope="row">{(row[1] ? row[1] : '***********') + ' ' + (row[2] ? row[2] : '')}</th>
+					<th scope="row" id={row[1] && row[1].includes('Substitutes') ? 'subs' : ''}>{(row[1] ? row[1] : '****************') + ' ' + (row[2] ? row[2] : '')}</th>
 					{#each cols as col}
 						{#if row[col]}
 							<td data-val={row[col]}></td>
