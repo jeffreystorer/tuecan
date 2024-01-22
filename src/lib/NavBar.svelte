@@ -15,12 +15,12 @@
     },
     {
       path: '/playersforthistuesday',
-      title: 'Players for This Tuesday',
+      title: 'This Tuesday',
       show: showPlayers,
     },
     {
       path: '/waitlistlastweek',
-      title: 'Wait List Last Week',
+      title: 'Wait Last Week',
       show: showWait,
     },
     {
