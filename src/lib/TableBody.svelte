@@ -29,7 +29,7 @@
 			{:else if type === 'playerinfo'}
 				{#if !row[0].includes('--')}
 					<tr>
-						<th scope="row">{row[1] + ' ' + row[2]}`</th>
+						<th scope="row">{row[1] + ' ' + row[2]}</th>
 						<td>Club No.: {row[4] ? row[4] : ''}</td>
 					</tr>
 					<tr>
