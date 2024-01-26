@@ -1,6 +1,5 @@
 <script>
   import { page } from '$app/stores';
-  let path;
   $: path = $page.url.pathname;
   export let data;
   let showPlayers = false;
